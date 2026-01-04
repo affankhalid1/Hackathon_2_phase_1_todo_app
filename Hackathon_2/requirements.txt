@@ -1,0 +1,10 @@
+# Console Todo Application Requirements
+# This application uses only Python standard library modules
+# No external dependencies required
+
+# For testing
+pytest>=7.0.0
+
+# For development (optional)
+black>=22.0.0
+flake8>=4.0.0
