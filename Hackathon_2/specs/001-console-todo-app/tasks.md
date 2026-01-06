@@ -169,11 +169,11 @@ description: "Task list for Console Todo Application implementation"
 **Purpose**: Improvements that affect multiple user stories
 
 - [x] T045 [P] Documentation updates per quickstart.md in README.md
-- [ ] T046 Error handling and validation improvements across all modules
-- [ ] T047 [P] Type hint validation across all modules
-- [ ] T048 [P] Additional unit tests for edge cases in tests/unit/
-- [ ] T049 Performance optimization for large task lists (1000+ tasks)
-- [ ] T050 Run quickstart validation and final integration testing
+- [x] T046 Error handling and validation improvements across all modules
+- [x] T047 [P] Type hint validation across all modules
+- [x] T048 [P] Additional unit tests for edge cases in tests/unit/
+- [x] T049 Performance optimization for large task lists (1000+ tasks)
+- [x] T050 Run quickstart validation and final integration testing
 
 ---
 

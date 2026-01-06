@@ -6,7 +6,15 @@
       "Bash(git branch -m 1-console-todo-app 001-console-todo-app)",
       "Bash(.specify/scripts/bash/check-prerequisites.sh --json)",
       "Bash(.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
-      "Bash(git rev-parse --git-dir)"
+      "Bash(git rev-parse --git-dir)",
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(pip install pytest)",
+      "Bash(pip install mypy)",
+      "Bash(mypy src/)",
+      "Bash(python -m pytest tests/unit/test_edge_cases.py -v)",
+      "Bash(python -m pytest tests/performance/test_performance.py -v)",
+      "Bash(python -m pytest tests/integration/test_cli_integration.py -v)",
+      "Bash(timeout 10s python -c \"\nfrom src.todo_app.main import main\nimport sys\n# Mock input to test basic functionality\nimport io\nimport contextlib\n\n# Test that the application can start without errors\ntry:\n    from src.todo_app.cli.menu import TodoMenu\n    menu = TodoMenu\\(\\)\n    print\\(''Application initialized successfully''\\)\n    \n    # Test basic operations\n    task = menu.task_service.add_task\\(''Test task'', description=''Test description''\\)\n    print\\(f''Task added with ID: {task.id}''\\)\n    \n    all_tasks = menu.task_service.get_all_tasks\\(\\)\n    print\\(f''Total tasks: {len\\(all_tasks\\)}''\\)\n    \n    print\\(''Basic functionality test passed!''\\)\n    \nexcept Exception as e:\n    print\\(f''Error: {e}''\\)\n    import traceback\n    traceback.print_exc\\(\\)\n\")"
     ]
   }
 }

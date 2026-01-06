@@ -9,22 +9,22 @@ from src.todo_app.services.task_service import TaskService
 def test_sort_tasks_by_id():
     """Test sorting tasks by ID."""
     service = TaskService()
-    task3 = service.add_task("Task 3")
-    task1 = service.add_task("Task 1")
-    task2 = service.add_task("Task 2")
+    task1_obj = service.add_task("Task 3")  # Gets ID 1
+    task2_obj = service.add_task("Task 1")  # Gets ID 2
+    task3_obj = service.add_task("Task 2")  # Gets ID 3
 
     # Sort by ID ascending
     sorted_tasks = service.sort_tasks("id", ascending=True)
     assert len(sorted_tasks) == 3
-    assert sorted_tasks[0].id == task1.id
-    assert sorted_tasks[1].id == task2.id
-    assert sorted_tasks[2].id == task3.id
+    assert sorted_tasks[0].id == 1  # First created task
+    assert sorted_tasks[1].id == 2  # Second created task
+    assert sorted_tasks[2].id == 3  # Third created task
 
     # Sort by ID descending
     sorted_tasks_desc = service.sort_tasks("id", ascending=False)
-    assert sorted_tasks_desc[0].id == task3.id
-    assert sorted_tasks_desc[1].id == task2.id
-    assert sorted_tasks_desc[2].id == task1.id
+    assert sorted_tasks_desc[0].id == 3  # Third created task
+    assert sorted_tasks_desc[1].id == 2  # Second created task
+    assert sorted_tasks_desc[2].id == 1  # First created task
 
 
 def test_sort_tasks_by_title():

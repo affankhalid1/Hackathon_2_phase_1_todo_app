@@ -25,9 +25,9 @@ class Task:
     description: Optional[str] = None
     due_date: Optional[date] = None
     priority: Priority = Priority.MEDIUM
-    tags: List[str] = None
+    tags: Optional[List[str]] = None
     completed: bool = False
-    created_at: datetime = None
+    created_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
 
     def __post_init__(self):

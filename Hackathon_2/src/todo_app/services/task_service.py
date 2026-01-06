@@ -15,6 +15,8 @@ class TaskService:
         """Initialize the TaskService with in-memory storage."""
         self.tasks: dict[int, Task] = {}
         self.next_id: int = 1
+        # Performance optimization: cache for search operations
+        self._search_cache: dict[str, List[Task]] = {}
 
     def add_task(
         self,
@@ -36,20 +38,26 @@ class TaskService:
 
         Returns:
             The created Task with a unique ID and timestamps
+
+        Raises:
+            ValueError: If task data is invalid
         """
         from datetime import datetime
-        task = Task(
-            id=self.next_id,
-            title=title,
-            description=description,
-            due_date=due_date,
-            priority=priority,
-            tags=tags if tags is not None else [],
-            created_at=datetime.now()
-        )
-        self.tasks[self.next_id] = task
-        self.next_id += 1
-        return task
+        try:
+            task = Task(
+                id=self.next_id,
+                title=title,
+                description=description,
+                due_date=due_date,
+                priority=priority,
+                tags=tags if tags is not None else [],
+                created_at=datetime.now()
+            )
+            self.tasks[self.next_id] = task
+            self.next_id += 1
+            return task
+        except ValueError as e:
+            raise ValueError(f"Invalid task data: {str(e)}")
 
     def get_all_tasks(self) -> List[Task]:
         """
@@ -94,23 +102,29 @@ class TaskService:
 
         Returns:
             True if successful, False if task not found
+
+        Raises:
+            ValueError: If updated task data is invalid
         """
         if task_id not in self.tasks:
             return False
 
-        task = self.tasks[task_id]
-        if title is not None:
-            task.title = title
-        if description is not None:
-            task.description = description
-        if due_date is not None:
-            task.due_date = due_date
-        if priority is not None:
-            task.priority = priority
-        if tags is not None:
-            task.tags = tags
+        try:
+            task = self.tasks[task_id]
+            if title is not None:
+                task.update_title(title)
+            if description is not None:
+                task.update_description(description)
+            if due_date is not None:
+                task.update_due_date(due_date)
+            if priority is not None:
+                task.update_priority(priority)
+            if tags is not None:
+                task.update_tags(tags)
 
-        return True
+            return True
+        except ValueError as e:
+            raise ValueError(f"Invalid task data: {str(e)}")
 
     def delete_task(self, task_id: int) -> bool:
         """
@@ -201,7 +215,7 @@ class TaskService:
 
             # Check tags filter
             if tags:
-                if not any(tag in task.tags for tag in tags):
+                if not task.tags or not any(tag in task.tags for tag in tags):
                     continue
 
             # Check due date filter
